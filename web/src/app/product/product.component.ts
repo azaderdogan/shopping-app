@@ -23,13 +23,23 @@ export class ProductComponent implements OnInit {
   title = 'Ürün Listesi';
   path = BASE_URL + '/products';
 
+  /**
+   * PİPE İÇERİSİNE YAPACAĞIMIZ İŞLEMLER SUBSCRİBE OLMAYI ENGELLEMİYOR.
+   * RXjs sayesinde oluyor
+   * RxJS, olay ve veri kaynaklarını abone olunabilir
+   * (subscribable) nesnelere dönüştürüp,
+   * bunlar üzerinde operatörler yardımıyla dönüşümler gerçekleştirebildiğiniz,
+   * gözlemleyenler (observer) aracılığıyla sonucu
+   * tüketebildiğiniz JavaScript'le yazılmış bir
+   * reaktif programlama (reactive programming) kütüphanesidir.
+   */
   ngOnInit(): void {
-    this.apiService.get<Product[]>(this.path).subscribe(data => {
+    this.apiService.get<Product[]>(this.path).pipe().subscribe(data => {
       this.products = data;
     });
   }
 
-  addToCart(product: Product) {
+ async addToCart(product: Product) {
 //event binding
     console.log(product.description, ' Sepete Eklendi.');
   }

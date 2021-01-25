@@ -115,6 +115,7 @@ public class ProductService implements IProductService {
                 .deliveryIn(productDeliveryService.getDeliveryInfo(productEs.getId()))
                 .categoryId(productEs.getCategory().getId())
                 .available(productAmountService.getByProductId(productEs.getId()))
+                .name(productEs.getName())
                 .freeDelivery(productDeliveryService.freeDeliveryCheck(productEs.getId(), productPrice))
                 .moneyType(MoneyTypes.USD)
                 .image(productImageService.getProductMainImage(productEs.getId()))

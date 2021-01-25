@@ -28,10 +28,10 @@
           <div class="row">
             <div class="col-md-5">
               <div>
-                <a href="#">{{ product.name }}</a>
+                <a class="value" [href]="product.id">{{ product.name }}</a>
                 <div class="product-info-detail">{{ product.description }}</div>
                 Seller:
-                <a class="value" [routerLink]="product.seller.id"> {{ product.seller }}</a>
+                <a class="value" [href]="product.seller.id"> {{ product.seller.name }}</a>
               </div>
               <span *ngIf="product.freeDelivery;else: delivery"> FREE  </span>
               Delivery: <span class="value">{{ product.deliveryIn }}</span>
@@ -49,7 +49,7 @@
               <input id="quantity" type="number" value="1" class="form-control quantity-input">
             </div>
             <div class="col-md-6">
-              <span>{{ product.moneyType }} {{ product.price }} </span>
+              <span>{{ product.moneyType }} {{ product.price | currency:"USD" }}  </span>
             </div>
           </div>
         </div>
