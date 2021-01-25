@@ -1,1 +1,71 @@
-<p>product works!</p>
+<div class="alert alert-secondary" role="alert">
+  <h3 *ngIf="products;else: noProduct">{{title}}</h3>
+</div>
+<div class="container shopping-cart">
+
+  <ng-template #noProduct>
+    <div class="alert alert-primary" role="alert">
+      Bu kategoride ürün yoktur!
+    </div>
+  </ng-template>
+  <div class="form-group">
+    <input
+      class="form-control"
+      id="inputFilter"
+      [(ngModel)]="filterText"
+      placeholder="Ürünler içerisinde arama yapın">
+    <small *ngIf="filterText" class="form-text text-muted">
+      Şu an <strong>{{filterText}}</strong> aradınız
+    </small>
+  </div>
+  <div class="row">
+    <div class="col-md-12 " *ngFor='let product of products | productFilter:filterText'>
+      <div class="row">
+        <div class="col-md-3">
+          <img class="card-img-top" alt="Text alternative when image is not available" [src]="product.image">
+        </div>
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-md-5">
+              <div>
+                <a href="#">{{ product.name }}</a>
+                <div class="product-info-detail">{{ product.description }}</div>
+                Seller:
+                <a class="value" [routerLink]="product.seller.id"> {{ product.seller }}</a>
+              </div>
+              <span *ngIf="product.freeDelivery;else: delivery"> FREE  </span>
+              Delivery: <span class="value">{{ product.deliveryIn }}</span>
+
+              <div class="product-info-detail"><span class="value" [innerHTML]="product.features"></span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="col-md-3">
+          <div class="row ">
+            <div class="col-md-6 ">
+              <label for="quantity">Quantity:</label>
+              <input id="quantity" type="number" value="1" class="form-control quantity-input">
+            </div>
+            <div class="col-md-6">
+              <span>{{ product.moneyType }} {{ product.price }} </span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-8"></div>
+        <div class="col-md-4">
+          <div class="row align-items-end">
+            <div class="col-md-6">
+              <button (click)="addToCart(product)" class="btn btn-primary">Add to Basket</button>
+            </div>
+            <div class="col-md-6">
+              <button class="btn btn-success">Buy now</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr>
+    </div>
+  </div>
+</div>
