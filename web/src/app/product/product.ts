@@ -11,6 +11,6 @@ export class Product {
   freeDelivery: boolean;
   deliveryIn: string;
   price: number;
-  moneyType: string;
+  moneySymbol: string;
 
 }

@@ -1,8 +1,11 @@
 package com.azaderdogan.shoppingapp.product.domain.mongo;
 
 import lombok.*;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
 
 @Document(collection = "product")
@@ -13,6 +16,7 @@ import java.util.List;
 @Builder
 public class Product {
 
+    @Id
     private String id;
     private String name;
     private String code;
@@ -21,6 +25,7 @@ public class Product {
     private String features;
     private String categoryId;
     private List<ProductImage> productImages;
+    private HashMap<MoneyTypes, BigDecimal> price;
     private Boolean active;
 
 }

@@ -4,10 +4,9 @@ import com.azaderdogan.shoppingapp.product.domain.es.ProductEs;
 import com.azaderdogan.shoppingapp.product.domain.mongo.MoneyTypes;
 import com.azaderdogan.shoppingapp.product.domain.mongo.Product;
 import com.azaderdogan.shoppingapp.product.domain.mongo.ProductImage;
-import com.azaderdogan.shoppingapp.product.model.ProductResponse;
-import com.azaderdogan.shoppingapp.product.model.ProductSaveRequest;
-import com.azaderdogan.shoppingapp.product.model.ProductSellerResponse;
-import com.azaderdogan.shoppingapp.product.repository.es.ProductEsRepository;
+import com.azaderdogan.shoppingapp.product.model.product.ProductResponse;
+import com.azaderdogan.shoppingapp.product.model.product.ProductSaveRequest;
+import com.azaderdogan.shoppingapp.product.model.product.ProductSellerResponse;
 import com.azaderdogan.shoppingapp.product.repository.mongo.ProductRepository;
 import com.azaderdogan.shoppingapp.product.service.IProductEsService;
 import com.azaderdogan.shoppingapp.product.service.IProductService;
@@ -19,7 +18,6 @@ import reactor.core.publisher.Mono;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static com.azaderdogan.shoppingapp.product.domain.mongo.ProductImage.*;
 import static java.util.stream.Collectors.*;
@@ -30,7 +28,6 @@ public class ProductService implements IProductService {
 
     private final IProductEsService productEsService;
     private final ProductRepository productRepository;
-    private final ProductPriceService productPriceService;
     private final ProductDeliveryService productDeliveryService;
     private final ProductAmountService productAmountService;
     private final ProductImageService productImageService;
@@ -66,6 +63,7 @@ public class ProductService implements IProductService {
                 .description(request.getDescription())
                 .features(request.getFeatures())
                 .name(request.getName())
+                .price(request.getPrice())
                 .productImages(request.getImages().stream().map(item -> new ProductImage(ImageType.FEATURE, item)).collect(toList()))
                 .build();
         product = productRepository.save(product).block();
@@ -106,9 +104,10 @@ public class ProductService implements IProductService {
         if (productEs == null){
             return null;
         }
-        BigDecimal productPrice = productPriceService.getByMoneyType(productEs.getId(), MoneyTypes.USD);
         return ProductResponse.builder()
-                .price(productPrice)
+                //todo client request üzerinden validate edifice
+                .price(productEs.getPrice().get("USD"))
+                .moneySymbol(MoneyTypes.USD.getSymbol())
                 .features(productEs.getFeatures())
                 .id(productEs.getId())
                 .description(productEs.getDescription())
@@ -116,8 +115,7 @@ public class ProductService implements IProductService {
                 .categoryId(productEs.getCategory().getId())
                 .available(productAmountService.getByProductId(productEs.getId()))
                 .name(productEs.getName())
-                .freeDelivery(productDeliveryService.freeDeliveryCheck(productEs.getId(), productPrice))
-                .moneyType(MoneyTypes.USD)
+                .freeDelivery(productDeliveryService.freeDeliveryCheck(productEs.getId(), productEs.getPrice().get("USD"),MoneyTypes.USD))
                 .image(productImageService.getProductMainImage(productEs.getId()))
                 .seller(ProductSellerResponse.builder().id(productEs.getSeller().getId()).name(productEs.getName()).build())
                 .build();

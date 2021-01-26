@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Category} from './Category';
+import {BASE_URL} from '../common/config';
+import {ApiService} from '../common/api.service';
 
 @Component({
   selector: 'app-category',
@@ -8,14 +10,18 @@ import {Category} from './Category';
 })
 export class CategoryComponent implements OnInit {
 
-  constructor() { }
-  title:"Kategori Listesi";
-  categories: Category[]= [
-    {id:"1",name:"Telefon",code:"telefonpr001"},
-    {id:"2",name:"Ev Aletleri",code:"evaletleri001"},
-    {id:"3",name:"Kırtasiye",code:"kirtasiyepr001"},
-  ];
+  path = BASE_URL + '/category';
+
+  constructor(private apiService: ApiService) {
+  }
+
+  title: 'Kategori Listesi';
+  categories: Category[];
+
   ngOnInit(): void {
+    this.apiService
+      .get<Category[]>(this.path)
+      .subscribe(categories => this.categories = categories);
   }
 
 }

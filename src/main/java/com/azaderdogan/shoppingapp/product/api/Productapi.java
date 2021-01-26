@@ -1,6 +1,6 @@
 package com.azaderdogan.shoppingapp.product.api;
 
-import com.azaderdogan.shoppingapp.product.model.ProductResponse;
+import com.azaderdogan.shoppingapp.product.model.product.ProductResponse;
 import com.azaderdogan.shoppingapp.product.service.IProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.CrossOrigin;

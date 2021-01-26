@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {Product} from './product';
-import {HttpClient} from '@angular/common/http';
 import {BASE_URL} from '../common/config';
 import {ApiService} from '../common/api.service';
 import {ApiForProductService} from '../services/api-for-product.service';
@@ -15,7 +14,7 @@ export class ProductComponent implements OnInit {
 //binding işlemi [] ile yapılır
 
 
-  constructor(private http: HttpClient, private apiService: ApiService) {
+  constructor( private apiService: ApiService) {
   }
 
   filterText = '';

@@ -1,4 +1,4 @@
-package com.azaderdogan.shoppingapp.product.model;
+package com.azaderdogan.shoppingapp.product.model.product;
 
 import com.azaderdogan.shoppingapp.product.domain.mongo.MoneyTypes;
 import lombok.Builder;
@@ -21,7 +21,7 @@ public class ProductResponse {
     private int available;
     private boolean freeDelivery;
     private String deliveryIn;
+    private String moneySymbol;
     private BigDecimal price;
     private String categoryId;
-    private MoneyTypes moneyType;
 }

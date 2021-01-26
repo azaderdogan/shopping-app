@@ -1,4 +1,4 @@
-package com.azaderdogan.shoppingapp.product.model;
+package com.azaderdogan.shoppingapp.product.model.product;
 
 import lombok.Builder;
 import lombok.Data;
