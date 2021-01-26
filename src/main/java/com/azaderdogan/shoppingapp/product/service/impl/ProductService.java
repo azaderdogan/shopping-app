@@ -42,6 +42,11 @@ public class ProductService implements IProductService {
 
     }
 
+    @Override
+    public Flux<ProductResponse> getProductsByCategoryId(String categoryId) {
+        return productEsService.getProductsByCategoryId(categoryId).map(this::mapToDto);
+    }
+
     /**
      * 1 - Mongoya yaz
      * 2 - Es güncelle

@@ -12,5 +12,6 @@ export class Product {
   deliveryIn: string;
   price: number;
   moneySymbol: string;
+  categoryId:string;
 
 }

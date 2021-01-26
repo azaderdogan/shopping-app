@@ -1,26 +1,30 @@
 import {Component, OnInit} from '@angular/core';
 import {Product} from './product';
-import {BASE_URL} from '../common/config';
-import {ApiService} from '../common/api.service';
-import {ApiForProductService} from '../services/api-for-product.service';
+import {ProductService} from '../services/product.service';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
   styleUrls: ['./product.component.css'],
-  providers:[ApiForProductService]
+  providers: [ProductService]
 })
 export class ProductComponent implements OnInit {
 //binding işlemi [] ile yapılır
 
-
-  constructor( private apiService: ApiService) {
-  }
+  /**
+   * routerlarda id yakalamak için activatedRoute modulunu import ediyoruz
+   * @param productService
+   */
+  constructor(
+    private productService: ProductService,
+    private activatedRoute: ActivatedRoute
+  ) { }
 
   filterText = '';
   products: Product[];
   title = 'Ürün Listesi';
-  path = BASE_URL + '/products';
+
 
   /**
    * PİPE İÇERİSİNE YAPACAĞIMIZ İŞLEMLER SUBSCRİBE OLMAYI ENGELLEMİYOR.
@@ -32,13 +36,18 @@ export class ProductComponent implements OnInit {
    * tüketebildiğiniz JavaScript'le yazılmış bir
    * reaktif programlama (reactive programming) kütüphanesidir.
    */
+  categoryId:string;
   ngOnInit(): void {
-    this.apiService.get<Product[]>(this.path).pipe().subscribe(data => {
-      this.products = data;
-    });
+
+    this.activatedRoute.params.subscribe(params =>{this.categoryId = params["categoryId"]});
+    this.productService
+      .getAllProduct()
+      .subscribe(snapshot => this.products = snapshot);
+    console.log(this.categoryId)
+  //  this.productService.getProductsByCategoryId(this.categoryId).subscribe(data => this.products = data);
   }
 
- async addToCart(product: Product) {
+  async addToCart(product: Product) {
 //event binding
     console.log(product.description, ' Sepete Eklendi.');
   }

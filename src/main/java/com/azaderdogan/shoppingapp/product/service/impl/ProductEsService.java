@@ -46,4 +46,9 @@ public class ProductEsService implements IProductEsService {
     public Flux<ProductEs> findAll() {
         return productEsRepository.findAll();
     }
+
+    @Override
+    public Flux<ProductEs> getProductsByCategoryId(String categoryId) {
+        return productEsRepository.getProductEsByCategory_Id(categoryId);
+    }
 }

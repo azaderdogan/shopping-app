@@ -28,12 +28,12 @@
           <div class="row">
             <div class="col-md-5">
               <div>
-                <a class="value" [href]="product.id">{{ product.name }}</a>
+                <a class="value" [href]="product.id" routerLink="/products/category/{{product.categoryId}}">{{ product.name }}</a>
                 <div class="product-info-detail">{{ product.description }}</div>
                 Seller:
-                <a class="value" [href]="product.seller.id"> {{ product.seller.name }}</a>
+                <a class="value" [href]="product.seller.id" routerLink=""> {{ product.seller.name }}</a>
               </div>
-              <span *ngIf="product.freeDelivery;else: delivery"> FREE  </span>
+              <span *ngIf="product.freeDelivery"> FREE  </span>
               Delivery: <span class="value">{{ product.deliveryIn }}</span>
 
               <div class="product-info-detail"><span class="value" [innerHTML]="product.features"></span>

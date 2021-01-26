@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
 import {tap, catchError} from 'rxjs/operators';
+import {BASE_URL} from './config';
 
 //root global etiketi verir.
 /**
@@ -16,14 +17,16 @@ export class ApiService {
   constructor(private  http: HttpClient) {
   }
 
+  baseUrl = BASE_URL;
 
+  /**
+   * pipe isteğe bağlıdır. pipe sayesinde reactive programladık.
+   *
+   */
   get<T>(path = ''): Observable<T> {
-    /**
-     * pipe isteğe bağlıdır. pipe sayesinde reactive programladık.
-     *
-     */
-    return this.http.get<T>(path).pipe(
-      tap(data => console.log(JSON.stringify(data))),
+console.log(this.baseUrl + path)
+    return this.http.get<T>(this.baseUrl + path).pipe(
+      // tap(data => console.log(JSON.stringify(data))),
       catchError(this.handleError),
     );
   }

@@ -3,10 +3,7 @@ package com.azaderdogan.shoppingapp.product.api;
 import com.azaderdogan.shoppingapp.product.model.product.ProductResponse;
 import com.azaderdogan.shoppingapp.product.service.IProductService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 
 @RestController
@@ -19,5 +16,9 @@ public class Productapi {
     @GetMapping
     public Flux<ProductResponse> getAllProducts(){
         return productService.getAll();
+    }
+    @GetMapping("/category/{categoryId}")
+    public Flux<ProductResponse> getProductsByCategoryId(@PathVariable("categoryId") String categoryId){
+        return productService.getProductsByCategoryId(categoryId);
     }
 }

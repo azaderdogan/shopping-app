@@ -40,7 +40,7 @@ public class ProductBootstrap {
             CategoryResponse kırtasiye = categoryService.saveCategory(CategorySaveRequest.builder().name("Kırtasiye").build());
             CategoryResponse yemek = categoryService.saveCategory(CategorySaveRequest.builder().name("Yemek").build());
 
-            IntStream.range(0, 20).forEach(item -> {
+            IntStream.range(0, 10).forEach(item -> {
                 HashMap<MoneyTypes, BigDecimal> price = new HashMap<>() {
                     {
                         put(MoneyTypes.USD, BigDecimal.valueOf((item + 1) * 20));
@@ -53,6 +53,24 @@ public class ProductBootstrap {
                         .description("Product Description" + item)
                         .price(price)
                         .categoryId(telefon.getId())
+                        .name("Product name" + item)
+                        .features("<li>Black Color</li> <li>Aluminum Case</li> <li>2 Years Warranty</li> <li>5 Inch (35x55mm)</li>")
+                        .images(Arrays.asList("https://cdn.dsmcdn.com//ty16/product/media/images/20201008/19/14253628/91657196/1/1_org.jpg", "https://cdn.dsmcdn.com/ty25/product/media/images/20201124/22/31552537/111694429/1/1_org_zoom.jpg"))
+                        .build());
+            });
+            IntStream.range(0, 10).forEach(item -> {
+                HashMap<MoneyTypes, BigDecimal> price = new HashMap<>() {
+                    {
+                        put(MoneyTypes.USD, BigDecimal.valueOf((item + 1) * 20));
+                        put(MoneyTypes.EUR, BigDecimal.valueOf((item + 1) * 15));
+                    }
+                };
+                productService.save(ProductSaveRequest.builder()
+                        .sellerId(randomUUID().toString())
+                        .id(randomUUID().toString())
+                        .description("Product Description" + item)
+                        .price(price)
+                        .categoryId(bilgisayar.getId())
                         .name("Product name" + item)
                         .features("<li>Black Color</li> <li>Aluminum Case</li> <li>2 Years Warranty</li> <li>5 Inch (35x55mm)</li>")
                         .images(Arrays.asList("https://cdn.dsmcdn.com//ty16/product/media/images/20201008/19/14253628/91657196/1/1_org.jpg", "https://cdn.dsmcdn.com/ty25/product/media/images/20201124/22/31552537/111694429/1/1_org_zoom.jpg"))
