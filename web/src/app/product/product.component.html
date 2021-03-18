@@ -28,7 +28,7 @@
           <div class="row">
             <div class="col-md-5">
               <div>
-                <a class="value" [href]="product.id" routerLink="/products/category/{{product.categoryId}}">{{ product.name }}</a>
+                <a class="value" [href]="product.id" routerLink="/products/{{product.id}}">{{ product.name }}</a>
                 <div class="product-info-detail">{{ product.description }}</div>
                 Seller:
                 <a class="value" [href]="product.seller.id" routerLink=""> {{ product.seller.name }}</a>
